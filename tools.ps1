@@ -33,30 +33,37 @@ function main {
 function install {
     $wingetPrograms = @(
         "Chocolatey.Chocolatey",
-        "Ytmdesktop.Ytmdesktop",
-        "RARLab.WinRAR",
-        "SomePythonThings.WingetUIStore",
-        "Ubisoft.Connect",
-        "Valve.Steam",
-        "WhirlwindFX.SignalRgb",
-        "RealtekSemiconductorCorp.RealtekAudioCon\u2026",
+        "OpenJS.NodeJS.LTS",
+        "Microsoft.VisualStudioCode",
         "JetBrains.PyCharm.Professional",
         "JetBrains.PHPStorm",
         "JetBrains.IntelliJIDEA.Ultimate",
-        "TechPowerUp.NVCleanstall",
+        "JetBrains.Rider",
         "Notepad++.Notepad++",
-        "Nextcloud.NextcloudDesktop",
-        "Microsoft.VisualStudioCode",
-        "Microsoft.Office",
-        "Logitech.GHUB",
-        "LabyMediaGmbH.LabyModLauncher",
-        "ItchIo.Itch",
-        "GOG.Galaxy",
+        "TeamViewer.TeamViewer",
+        "AnyDeskSoftwareGmbH.AnyDesk",
+        "Termius.Termius",
         "Git.Git",
-        "EpicGames.EpicGamesLauncher",
         "EclipseAdoptium.Temurin.20.JRE",
         "EclipseAdoptium.Temurin.20.JDK",
+        "Microsoft.DotNet.SDK.7",
+        "xampp",
+        "SomePythonThings.WingetUIStore",
+        "RealtekSemiconductorCorp.RealtekAudioCon\u2026",
+        "TechPowerUp.NVCleanstall",
+        "WhirlwindFX.SignalRgb",
+        "RARLab.WinRAR",
+        "Ytmdesktop.Ytmdesktop",
+        "Nextcloud.NextcloudDesktop",
+        "Microsoft.Office",
+        "Logitech.GHUB",
+        "Valve.Steam",
+        "Ubisoft.Connect",
+        "GOG.Galaxy",
+        "EpicGames.EpicGamesLauncher",
         "ElectronicArts.EADesktop",
+        "LabyMediaGmbH.LabyModLauncher",
+        "ItchIo.Itch",
         "Discord.Discord",
         "Anki.Anki"
     )
@@ -65,7 +72,11 @@ function install {
         "chocolatey-core.extension",
         "chocolatey-compatibility.extension",
         "amd-ryzen-master",
-        "amd-ryzen-chipset"
+        "amd-ryzen-chipset",
+        "python3"
+    )
+    $npm = @(
+        "@angular/cli"
     )
     $urls = @("https://pdisp01.c-wss.com/gdl/WWUFORedirectTarget.do?id=MDEwMDAwNDYxNjAy&cmp=ABX&lang=DE")
 
@@ -75,6 +86,10 @@ function install {
 
     foreach ($program in $chocolatey) {
         choco install $program -y
+    }
+
+    foreach ($program in $npm) {
+        npm install -g $program
     }
 
     foreach($program in $urls) {
@@ -94,13 +109,17 @@ function recover {
         Expand-Archive -Path '.\Backup_*.zip'
     }
 
-    Copy-Item ".\Backup_*\AppData\Roaming\*" -Recurse -Destination $userpath"\AppData\Roaming\"
+    Copy-Item ".\Backup_*\*" -Recurse -Destination $userpath"\"
+
 }
 
 function createBackup {
     $appdataFolders = @(
         ".minecraft", "Anki2", "Code", "discord", "JetBrains", "LabyMod", "LabyMod Launcher",
         "ludusavi", "Nextcloud", "Notepad++", "youtube-music-desktop-app"
+    )
+    $documentsFolders = @(
+        "WhirlwindFX"
     )
 
     $backupPath = Join-Path $userpath "\AppData\Local\Temp\toolsbackup"
@@ -114,6 +133,14 @@ function createBackup {
     foreach($programm in $appdataFolders) {
         $sourcePath = $userpath + "\AppData\Roaming\" + $programm + "\*"
         $destinationPath = $backupPath + "\AppData\Roaming\" + $programm
+        New-Item -Path $destinationPath -ItemType Directory
+        Copy-Item -Path $sourcePath -Destination $destinationPath -Recurse
+
+    }
+
+    foreach($programm in $documentsFolders) {
+        $sourcePath = $userpath + "\Documents\" + $programm + "\*"
+        $destinationPath = $backupPath + "\Documents\" + $programm
         New-Item -Path $destinationPath -ItemType Directory
         Copy-Item -Path $sourcePath -Destination $destinationPath -Recurse
 
