@@ -1,4 +1,4 @@
-
+# REQURIES App-Installer from the Microsoft Store https://www.microsoft.com/p/app-installer/9nblggh4nns1#activetab=pivot:overviewtab
 $userpath = $env:USERPROFILE;
 $time = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 
@@ -32,31 +32,11 @@ function main {
 
 function install {
     $wingetPrograms = @(
+        # Package Managers
         "Chocolatey.Chocolatey",
         "OpenJS.NodeJS.LTS",
-        "Microsoft.VisualStudioCode",
-        "JetBrains.PyCharm.Professional",
-        "JetBrains.PHPStorm",
-        "JetBrains.IntelliJIDEA.Ultimate",
-        "JetBrains.Rider",
-        "Notepad++.Notepad++",
-        "TeamViewer.TeamViewer",
-        "AnyDeskSoftwareGmbH.AnyDesk",
-        "Termius.Termius",
-        "Git.Git",
-        "EclipseAdoptium.Temurin.20.JRE",
-        "EclipseAdoptium.Temurin.20.JDK",
-        "Microsoft.DotNet.SDK.7",
-        "xampp",
-        "SomePythonThings.WingetUIStore",
-        "RealtekSemiconductorCorp.RealtekAudioCon\u2026",
-        "TechPowerUp.NVCleanstall",
-        "WhirlwindFX.SignalRgb",
-        "RARLab.WinRAR",
-        "Ytmdesktop.Ytmdesktop",
-        "Nextcloud.NextcloudDesktop",
-        "Microsoft.Office",
-        "Logitech.GHUB",
+
+        # Game Launchers
         "Valve.Steam",
         "Ubisoft.Connect",
         "GOG.Galaxy",
@@ -64,8 +44,52 @@ function install {
         "ElectronicArts.EADesktop",
         "LabyMediaGmbH.LabyModLauncher",
         "ItchIo.Itch",
+        "SideQuestVR.SideQuest",
+        "Meta.Oculus",
+        "RiotGames.Valorant.EU",
+        "RiotGames.LeagueOfLegends.EUW"
+
+        # Development Tools
+        "Microsoft.VisualStudioCode",
+        "JetBrains.Toolbox",
+        "Termius.Termius",
+        "Git.Git",
+        "EclipseAdoptium.Temurin.20.JRE",
+        "EclipseAdoptium.Temurin.20.JDK",
+        "Microsoft.DotNet.SDK.7",
+        "xampp",
+        "Docker.DockerDesktop",
+        "GitHub.GitHubDesktop",
+
+        # Utilitis
+        "Notepad++.Notepad++",
+        "Notion.Notion",
+        "Anki.Anki",
+        "TeamViewer.TeamViewer",
+        "AnyDeskSoftwareGmbH.AnyDesk",
+        "SomePythonThings.WingetUIStore",
+        "WhirlwindFX.SignalRgb",
+        "RARLab.WinRAR",
+        "Ytmdesktop.Ytmdesktop",
+        "Nextcloud.NextcloudDesktop",
+        "Microsoft.Office",
+        "Logitech.GHUB",
+        "Mozilla.Firefox",
+        "MusicBrainz.Picard",
+        "OBSProject.OBSStudio",
+        "buchen.portfolio",
+        "Surfshark.Surfshark",
+        "Rils.TouchPortal",
+        "WinDirStat.WinDirStat",
+
+        # Drivers
+        "RealtekSemiconductorCorp.RealtekAudioCon\u2026",
+        "TechPowerUp.NVCleanstall",
+
+        # Social Media
         "Discord.Discord",
-        "Anki.Anki"
+        "TeamSpeakSystems.TeamSpeakClient"
+
     )
     $chocolatey = @(
         "chocolatey-windowsupdate.extension",
@@ -78,10 +102,13 @@ function install {
     $npm = @(
         "@angular/cli"
     )
-    $urls = @("https://pdisp01.c-wss.com/gdl/WWUFORedirectTarget.do?id=MDEwMDAwNDYxNjAy&cmp=ABX&lang=DE")
+    $urls = @(
+        "https://pdisp01.c-wss.com/gdl/WWUFORedirectTarget.do?id=MDEwMDAwNDYxNjAy&cmp=ABX&lang=DE",
+        "https://downloader.battle.net/download/getInstaller?os=win&installer=Battle.net-Setup.exe"
+    )
 
     foreach ($program in $wingetPrograms) {
-        winget install --id $program --exact --accept-source-agreements --disable-interactivity --accept-source-agreements --force
+        winget install --id Anki.Anki --exact --accept-source-agreements --disable-interactivity --accept-source-agreements --force
     }
 
     foreach ($program in $chocolatey) {
